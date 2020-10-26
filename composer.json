@@ -1,0 +1,16 @@
+{
+  "name": "spinsch/ngrok",
+  "license": "OSL-3.0",
+  "type": "magento-module",
+  "suggest": {
+    "magento-hackathon/magento-composer-installer": "*"
+  },
+  "description": "Ngrok helper for OpenMage",
+  "authors": [
+    {
+      "name": "Marc Romano",
+      "email": "rcro@protonmail.ch",
+      "role": "Maintainer"
+    }
+  ]
+}

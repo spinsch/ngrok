@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+    <modules>
+        <Spinsch_Ngrok>
+            <version>0.1.0</version>
+        </Spinsch_Ngrok>
+    </modules>
+    <global>
+        <models>
+            <core>
+                <rewrite>
+                    <store>Spinsch_Ngrok_Model_Store</store>
+                </rewrite>
+            </core>
+        </models>
+        <helpers>
+            <ngrok>
+                <class>Spinsch_Ngrok_Helper</class>
+            </ngrok>
+        </helpers>
+    </global>
+</config>
