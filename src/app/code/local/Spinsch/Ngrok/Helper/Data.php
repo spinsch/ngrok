@@ -3,7 +3,7 @@
 class Spinsch_Ngrok_Helper_Data
 {
     /**
-     * @var string
+     * @var mixed
      */
     protected $_host = null;
 
@@ -16,13 +16,18 @@ class Spinsch_Ngrok_Helper_Data
     {
         if ($this->_host === null) {
 
-            $host = $this->getServerParam('HTTP_X_ORIGINAL_HOST');
+            // it need to overwrite http_host for special calls
+            // especially for api calls with WSDL
 
-            if (empty($host)) {
-                $host = $this->getServerParam('HTTP_HOST');
+            if (isset($_SERVER['HTTP_X_ORIGINAL_HOST'])) {
+                $_SERVER['HTTP_HOST'] = $_SERVER['HTTP_X_ORIGINAL_HOST'];
             }
 
-            $this->_host = (stripos($host, '.ngrok.io') !== false) ? $host : false;
+            if (stripos($_SERVER['HTTP_HOST'], '.ngrok.io') !== false) {
+                $this->_host = $_SERVER['HTTP_HOST'];
+            } else {
+                $this->_host = false;
+            }
         }
 
         return $this->_host;
@@ -45,7 +50,7 @@ class Spinsch_Ngrok_Helper_Data
      */
     public function getProtocol()
     {
-        return $this->getServerParam('HTTP_X_FORWARDED_PROTO');
+        return $_SERVER['HTTP_X_FORWARDED_PROTO'];
     }
 
     /**
@@ -56,16 +61,5 @@ class Spinsch_Ngrok_Helper_Data
     public function isSecure()
     {
         return ($this->getProtocol() == 'https');
-    }
-
-    /**
-     * Get server param by key
-     *
-     * @param $key
-     * @return mixed
-     */
-    public function getServerParam($key)
-    {
-        return Mage::app()->getRequest()->getServer($key);
     }
 }
